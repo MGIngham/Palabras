@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PalabrasApp.Client;
 
-namespace Client
+namespace PalabrasApp.Client
 {
     public class Program
     {
