@@ -6,7 +6,7 @@ namespace PalabrasApp.Shared
 {
     public class Palabra
     {
-        public string EnglishWord { get; set; }
         public string SpanishWord { get; set; }
+        public string EnglishWord { get; set; }
     }
 }

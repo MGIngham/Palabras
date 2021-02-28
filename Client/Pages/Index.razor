@@ -1,5 +1,7 @@
 ﻿@page "/"
 @using PalabrasApp.Shared
+@inject HttpClient Http
+
 
 <h1>Hello, world!</h1>
 
@@ -7,11 +9,37 @@ Welcome to your new app.
 
 <h2>@pal.EnglishWord</h2>
 
+@if (palabras == null)
+{
+    <h3>It's on its way</h3>
+}
+else
+{
+    @foreach (var palabra in palabras)
+    {
+        <h3>@palabra.SpanishWord</h3>
+    }
+}
+
 @code {
     private Palabra pal = new Palabra
     {
-        EnglishWord = "Bed",
-        SpanishWord = "Cama"
+        SpanishWord = "Cama",
+        EnglishWord = "Bed"
     };
+
+    private IEnumerable<Palabra> palabras;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            palabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+    }
 }
 
