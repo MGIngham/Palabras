@@ -17,7 +17,7 @@ namespace PalabrasApp.Api
         [FunctionName("GetPalabras")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
-                [CosmosDB(
+            [CosmosDB(
                 databaseName: "palabras",
                 collectionName: "ContainerMain",
                 SqlQuery = "SELECT * FROM ContainerMain",
@@ -29,3 +29,5 @@ namespace PalabrasApp.Api
         }
     }
 }
+
+

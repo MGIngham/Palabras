@@ -3,38 +3,67 @@
 @inject HttpClient Http
 
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<h2>@pal.EnglishWord</h2>
+<h1>Palabras</h1>
 
 @if (palabras == null)
 {
-    <h3>It's on its way</h3>
+    <h3>It's on its way...</h3>
 }
 else
 {
-    @foreach (var palabra in palabras)
+    @foreach (var palabra in @palabras)
     {
-        <h3>@palabra.SpanishWord</h3>
+        <h2>@palabra.SpanishWord = @palabra.EnglishWord</h2>
     }
 }
 
+<div>
+    <a href="/.auth/login/google">Login</a>
+</div>
+
+<input type="text" @bind="@spanishWord" />
+
+<br />
+
+<input type="text" @bind="@englishWord" />
+
+
+<button @onclick="@AddPalabra">Add word</button>
+
+
+
 @code {
-    private Palabra pal = new Palabra
-    {
-        SpanishWord = "Cama",
-        EnglishWord = "Bed"
-    };
 
-    private IEnumerable<Palabra> palabras;
+        private IEnumerable<Palabra> palabras;
 
-    protected override async Task OnInitializedAsync()
-    {
-        try
+        private string spanishWord;
+        private string englishWord;
+
+
+        protected override async Task OnInitializedAsync()
         {
-            palabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
+            try
+            {
+                palabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+        }
+
+        protected async Task AddPalabra()
+        {
+            try
+            {
+            var pal = new Palabra
+            {
+                SpanishWord = spanishWord,
+                EnglishWord = englishWord
+            };
+
+        await Http.PostAsJsonAsync<Palabra>("/api/AddPalabra", pal);
         }
         catch (Exception ex)
         {
