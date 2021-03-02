@@ -1,20 +1,18 @@
 ﻿@page "/"
 @using PalabrasApp.Shared
 @inject HttpClient Http
+@inject NavigationManager Nav
 
 
 <h1>Palabras</h1>
 
-@if (palabras == null)
+@if (allPalabras == null)
 {
     <h3>It's on its way...</h3>
 }
 else
 {
-    @foreach (var palabra in @palabras)
-    {
-        <h2>@palabra.SpanishWord = @palabra.EnglishWord</h2>
-    }
+    <h2>@palabra.SpanishWord = @palabra.EnglishWord</h2>
 }
 
 <div>
@@ -34,41 +32,53 @@ else
 
 @code {
 
-        private IEnumerable<Palabra> palabras;
+    private IEnumerable<Palabra> allPalabras;
+    private Palabra palabra;
 
-        private string spanishWord;
-        private string englishWord;
+    private string spanishWord;
+    private string englishWord;
 
 
-        protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
+    {
+        try
         {
-            try
-            {
-                palabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-        }
-
-        protected async Task AddPalabra()
-        {
-            try
-            {
-            var pal = new Palabra
-            {
-                SpanishWord = spanishWord,
-                EnglishWord = englishWord
-            };
-
-        await Http.PostAsJsonAsync<Palabra>("/api/AddPalabra", pal);
+            allPalabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
+            RandomPalabra(allPalabras);
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
         }
+
+    }
+
+    protected async Task AddPalabra()
+    {
+        try
+        {
+            var pal = new Palabra
+            {
+                SpanishWord = spanishWord.ToLower(),
+                EnglishWord = englishWord.ToLower()
+            };
+
+            await Http.PostAsJsonAsync<Palabra>("/api/AddPalabra", pal);
+        }
+        catch (HttpRequestException)
+        {
+            Nav.NavigateTo("/.auth/login/google");
+        }
+    }
+
+    protected Palabra RandomPalabra(IEnumerable<Palabra> palabras)
+    {
+        var palabrasList = palabras.ToList();
+        var palabrasLength = palabrasList.Count();
+        Random random = new Random();
+        var randomPalabraIndex = random.Next(0, palabrasLength);
+        palabra = palabrasList[randomPalabraIndex];
+        return palabra;
     }
 }
 
