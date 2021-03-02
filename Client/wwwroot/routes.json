@@ -1,7 +1,7 @@
 {
   "routes": [
     {
-      "route": "/api/GetPalabras",
+      "route": "/api/AddPalabra",
       "allowedRoles": [ "updater" ]
     },
     {
