@@ -65,7 +65,7 @@ else
 
             await Http.PostAsJsonAsync<Palabra>("/api/AddPalabra", pal);
         }
-        catch (HttpRequestException)
+        catch (UnauthorizedAccessException)
         {
             Nav.NavigateTo("/.auth/login/google");
         }
