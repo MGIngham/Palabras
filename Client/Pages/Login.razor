@@ -1,0 +1,11 @@
+﻿@page "/Login"
+@inject NavigationManager Nav
+
+<h3>Login</h3>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        Nav.NavigateTo("/.auth/login/google");
+    }
+}
