@@ -55,6 +55,8 @@ else
 
     protected async Task AddPalabra()
     {
+        var reqError = false;
+
         try
         {
             var pal = new Palabra
@@ -65,9 +67,14 @@ else
 
             await Http.PostAsJsonAsync<Palabra>("/api/AddPalabra", pal);
         }
-        catch (Exception ex)
+        catch (HttpRequestException)
         {
-            Console.WriteLine(ex.ToString());
+            reqError = true;
+        }
+
+        if(reqError)
+        {
+            Nav.NavigateTo("/.auth/login/google");
         }
     }
 
