@@ -69,13 +69,9 @@ else
         }
         catch (HttpRequestException)
         {
-            reqError = true;
+            NavigateToLogin();
         }
 
-        if(reqError)
-        {
-            Nav.NavigateTo("/.auth/login/google");
-        }
     }
 
     protected Palabra RandomPalabra(IEnumerable<Palabra> palabras)
@@ -86,6 +82,11 @@ else
         var randomPalabraIndex = random.Next(0, palabrasLength);
         palabra = palabrasList[randomPalabraIndex];
         return palabra;
+    }
+
+    protected void NavigateToLogin ()
+    {
+        Nav.NavigateTo("/.auth/login/google");
     }
 }
 
