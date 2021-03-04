@@ -67,9 +67,12 @@ else
 
             await Http.PostAsJsonAsync<Palabra>("/api/AddPalabra", pal);
         }
-        catch (HttpRequestException)
+        catch (Exception ex)
         {
-            NavigateToLogin();
+            if(ex != null)
+            {
+                NavigateToLogin();
+            }
         }
 
     }
