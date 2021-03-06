@@ -62,15 +62,16 @@ else
         }
 
 
-            var data = await Http.GetFromJsonAsync<JsonElement>("/.auth/me");
-            var loggedInStatus = data.GetProperty("clientPrincipal");
+        var data = await Http.GetFromJsonAsync<JsonElement>("/.auth/me");
+        var loggedInStatus = data.GetProperty("clientPrincipal");
 
-            if (!loggedInStatus.ToString().Equals("null"))
-            {
-                isLoggedIn = true;
-            }
+        if (!loggedInStatus.Equals(null))
+        {
+            isLoggedIn = true;
+        }
 
-     
+        Console.Write(loggedInStatus.ToString());
+
 
 
     }
