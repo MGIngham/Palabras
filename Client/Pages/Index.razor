@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using PalabrasApp.Shared
+@using System.Text.Json
 @inject HttpClient Http
 @inject NavigationManager Nav
 
@@ -46,7 +47,6 @@ else
     private string spanishWord;
     private string englishWord;
 
-    private HttpResponseMessage getAuthStatus;
     private bool isLoggedIn = false;
 
     protected override async Task OnInitializedAsync()
@@ -63,14 +63,12 @@ else
 
         try
         {
-            getAuthStatus = await Http.GetAsync("/.auth/me");
+            var data = await Http.GetFromJsonAsync<JsonElement>("/.auth/me");
+            var loggedInStatus = data.GetProperty("clientPrinciple").ToString();
 
-            if (getAuthStatus == null)
+            if(loggedInStatus == "null")
             {
                 isLoggedIn = false;
-            } else
-            {
-                isLoggedIn = true;
             }
 
         }
