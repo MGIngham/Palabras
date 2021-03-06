@@ -65,7 +65,7 @@ else
             var data = await Http.GetFromJsonAsync<JsonElement>("/.auth/me");
             var loggedInStatus = data.GetProperty("clientPrincipal");
 
-            if (loggedInStatus.ToString().Equals("null"))
+            if (!loggedInStatus.ToString().Equals("null"))
             {
                 isLoggedIn = true;
             }
