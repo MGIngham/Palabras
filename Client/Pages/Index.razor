@@ -66,12 +66,11 @@ else
 
 
         var data = await Http.GetFromJsonAsync<JsonElement>("/.auth/me");
-        var loggedInStatus = data.GetProperty("clientPrincipal");
 
-        if (loggedInStatus.GetArrayLength() != 0)
+        if (data.ValueKind == JsonValueKind.Object)
         {
             isLoggedIn = true;
-            Console.WriteLine(loggedInStatus.ToString());
+            Console.WriteLine(data.ToString());
         }
 
     }
