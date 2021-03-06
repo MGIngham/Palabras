@@ -61,21 +61,17 @@ else
             Console.WriteLine(ex.ToString());
         }
 
-        try
-        {
+
             var data = await Http.GetFromJsonAsync<JsonElement>("/.auth/me");
             var loggedInStatus = data.GetProperty("clientPrincipal");
 
-            if(loggedInStatus.ToString().Equals("null"))
+            if (loggedInStatus.ToString().Equals("null"))
             {
                 isLoggedIn = true;
             }
 
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
+     
+
 
     }
 
