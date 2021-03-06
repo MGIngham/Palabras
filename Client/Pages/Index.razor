@@ -28,6 +28,8 @@ else
 
 <button @onclick="@AddPalabra">Add word</button>
 
+<a href="/.auth/login/google">Login</a>
+
 
 
 @code {
@@ -55,7 +57,6 @@ else
 
     protected async Task AddPalabra()
     {
-        var reqError = false;
 
         try
         {
@@ -69,10 +70,7 @@ else
         }
         catch (Exception ex)
         {
-            if(ex != null)
-            {
-                NavigateToLogin();
-            }
+            Console.WriteLine(ex.ToString());
         }
 
     }
@@ -87,9 +85,5 @@ else
         return palabra;
     }
 
-    protected void NavigateToLogin ()
-    {
-        Nav.NavigateTo("/.auth/login/google");
-    }
 }
 
