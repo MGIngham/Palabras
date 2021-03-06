@@ -19,7 +19,11 @@ else
     <a href="/.auth/login/google">Login</a>
 </div>
 
-@if (isLoggedIn)
+@if (isLoggedIn == false)
+{
+    <h2>Not logged in</h2>
+}
+else
 {
     <div id="addWord">
         <input type="text" @bind="@spanishWord" />
@@ -64,6 +68,9 @@ else
             if (getAuthStatus == null)
             {
                 isLoggedIn = false;
+            } else
+            {
+                isLoggedIn = true;
             }
 
         }
