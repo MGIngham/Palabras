@@ -19,17 +19,19 @@ else
     <a href="/.auth/login/google">Login</a>
 </div>
 
-<input type="text" @bind="@spanishWord" />
+@if (isLoggedIn)
+{
+    <div id="addWord">
+        <input type="text" @bind="@spanishWord" />
 
-<br />
+        <br />
 
-<input type="text" @bind="@englishWord" />
+        <input type="text" @bind="@englishWord" />
 
 
-<button @onclick="@AddPalabra">Add word</button>
-
-<a href="/.auth/login/google">Login</a>
-
+        <button @onclick="@AddPalabra">Add word</button>
+    </div>
+}
 
 
 @code {
@@ -40,6 +42,8 @@ else
     private string spanishWord;
     private string englishWord;
 
+    private HttpResponseMessage getAuthStatus;
+    private bool isLoggedIn;
 
     protected override async Task OnInitializedAsync()
     {
@@ -47,6 +51,21 @@ else
         {
             allPalabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
             RandomPalabra(allPalabras);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+
+        try
+        {
+            getAuthStatus = await Http.GetAsync("/.auth/me");
+
+            if (getAuthStatus == null)
+            {
+                isLoggedIn = false;
+            }
+
         }
         catch (Exception ex)
         {
