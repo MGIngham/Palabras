@@ -39,6 +39,8 @@ else
 }
 
 
+<h2>@ili</h2>
+
 @code {
 
     private IEnumerable<Palabra> allPalabras;
@@ -48,6 +50,7 @@ else
     private string englishWord;
 
     private bool isLoggedIn = false;
+    private string ili;
 
     protected override async Task OnInitializedAsync()
     {
@@ -58,14 +61,14 @@ else
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.ToString());
+            ili = ToString();
         }
 
 
         var data = await Http.GetFromJsonAsync<JsonElement>("/.auth/me");
         var loggedInStatus = data.GetProperty("clientPrincipal");
 
-        if (!loggedInStatus.Equals(null))
+        if (loggedInStatus.GetArrayLength() != 0)
         {
             isLoggedIn = true;
             Console.WriteLine(loggedInStatus.ToString());
