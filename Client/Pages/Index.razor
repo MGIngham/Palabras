@@ -52,7 +52,7 @@ else
 
     private IEnumerable<Palabra> allPalabras;
     private Palabra palabra;
-    private Palabra newPalabra = new Palabra();
+    private Palabra newPalabra;
 
     private string spanishWord;
     private string englishWord;
@@ -64,6 +64,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        newPalabra = new Palabra
+        {
+            EnglishWord = "big",
+            SpanishWord = "grande"
+        }
+
         try
         {
             allPalabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
