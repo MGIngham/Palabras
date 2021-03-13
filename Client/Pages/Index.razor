@@ -17,7 +17,7 @@ else
 }
 
 <div>
-    <a href="/.auth/login/google">Login</a>
+    <a href="/.auth/login/google">Add word</a>
 </div>
 
 @if (isLoggedIn == false)
@@ -26,18 +26,25 @@ else
 }
 else
 {
-    <div id="addWord">
-        <input type="text" @bind="@spanishWord" />
-
+    <EditForm Model="@newPalabra" OnValidSubmit="@AddPalabra">
+        <DataAnnotationsValidator />
+        <label>Spanish</label>
+        <InputText id="spanishWord" @bind-Value="palabra.SpanishWord" />
         <br />
+        <label>English</label>
+        <InputText id="englishWord" @bind-Value="palabra.EnglishWord" />
 
-        <input type="text" @bind="@englishWord" />
-
-
-        <button @onclick="@AddPalabra">Add word</button>
-    </div>
+        <button type="submit">Save</button>
+    </EditForm>
 }
 
+@if (showError)
+{
+    <span id="httpErrorComponent">@errorText</span>
+    <div>
+        <a href="/.auth/login/google">Add word</a>
+    </div>
+}
 
 <h2>@ili</h2>
 
@@ -45,12 +52,15 @@ else
 
     private IEnumerable<Palabra> allPalabras;
     private Palabra palabra;
+    private Palabra newPalabra;
 
     private string spanishWord;
     private string englishWord;
 
     private bool isLoggedIn = false;
     private string ili;
+    private bool showError = false;
+    private string errorText;
 
     protected override async Task OnInitializedAsync()
     {
@@ -81,17 +91,14 @@ else
 
         try
         {
-            var pal = new Palabra
-            {
-                SpanishWord = spanishWord.ToLower(),
-                EnglishWord = englishWord.ToLower()
-            };
-
-            await Http.PostAsJsonAsync<Palabra>("/api/AddPalabra", pal);
+            await Http.PostAsJsonAsync<Palabra>("/api/AddPalabra", newPalabra);
+            Console.WriteLine(newPalabra.SpanishWord + " = " + newPalabra.EnglishWord);
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
+            showError = true;
+            errorText = ex.ToString();
         }
 
     }
