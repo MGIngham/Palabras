@@ -62,13 +62,14 @@ else
     private bool showError = false;
     private string errorText;
 
+
     protected override async Task OnInitializedAsync()
     {
         newPalabra = new Palabra
         {
-            EnglishWord = "big",
-            SpanishWord = "grande"
-        }
+            EnglishWord = "",
+            SpanishWord = ""
+        };
 
         try
         {
