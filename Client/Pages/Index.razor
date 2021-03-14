@@ -38,6 +38,16 @@ else
     </EditForm>
 }
 
+<div>
+    <a href="/.auth/logout/google">Logout</a>
+</div>
+
+<h3>Todos las palabras</h3>
+@foreach(var singlePalabra in allPalabras)
+{
+    <span>@singlePalabra.SpanishWord : @singlePalabra.EnglishWord</span>
+}
+
 @if (showError)
 {
     <span id="httpErrorComponent">@errorText</span>
@@ -95,7 +105,9 @@ else
         {
             await Http.PostAsJsonAsync<Palabra>("/api/AddPalabra", newPalabra);
             Console.WriteLine(newPalabra.SpanishWord + " = " + newPalabra.EnglishWord);
+            newPalabra = new Palabra();
         }
+
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
