@@ -18,7 +18,9 @@ else
     <h3>Todos las palabras</h3>
     @foreach (var singlePalabra in allPalabras)
     {
-        <span>@singlePalabra.SpanishWord : @singlePalabra.EnglishWord</span>
+        <ul>
+            <li>@singlePalabra.SpanishWord : @singlePalabra.EnglishWord</li>
+        </ul>
     }
 }
 
@@ -35,17 +37,17 @@ else
     <EditForm Model="@newPalabra" OnValidSubmit="@AddPalabra">
         <DataAnnotationsValidator />
         <label>Spanish</label>
-        <InputText id="spanishWord" @bind-Value="palabra.SpanishWord" />
+        <InputText id="spanishWord" @bind-Value="newPalabra.SpanishWord" />
         <br />
         <label>English</label>
-        <InputText id="englishWord" @bind-Value="palabra.EnglishWord" />
+        <InputText id="englishWord" @bind-Value="newPalabra.EnglishWord" />
 
         <button type="submit">Save</button>
     </EditForm>
 }
 
 <div>
-    <a href="/.auth/logout/google">Logout</a>
+    <a href="/.auth/logout">Logout</a>
 </div>
 
 @if (showError)
