@@ -14,6 +14,12 @@
 else
 {
     <h2>@palabra.SpanishWord = @palabra.EnglishWord</h2>
+
+    <h3>Todos las palabras</h3>
+    @foreach (var singlePalabra in allPalabras)
+    {
+        <span>@singlePalabra.SpanishWord : @singlePalabra.EnglishWord</span>
+    }
 }
 
 <div>
@@ -41,12 +47,6 @@ else
 <div>
     <a href="/.auth/logout/google">Logout</a>
 </div>
-
-<h3>Todos las palabras</h3>
-@foreach(var singlePalabra in allPalabras)
-{
-    <span>@singlePalabra.SpanishWord : @singlePalabra.EnglishWord</span>
-}
 
 @if (showError)
 {
