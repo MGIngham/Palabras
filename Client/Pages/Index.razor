@@ -52,7 +52,7 @@ else
 
     private IEnumerable<Palabra> allPalabras;
     private Palabra palabra;
-    private Palabra newPalabra;
+    private Palabra newPalabra = new Palabra();
 
     private string spanishWord;
     private string englishWord;
@@ -65,11 +65,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        newPalabra = new Palabra
-        {
-            EnglishWord = "",
-            SpanishWord = ""
-        };
 
         try
         {
