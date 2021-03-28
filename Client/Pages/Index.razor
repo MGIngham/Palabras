@@ -30,17 +30,17 @@
 
         }
 
-    <div class="row">
-        <div class="col-sm-1">
-            <a href="/.auth/login/google" class="btn btn-scnd">Add word</a>
-        </div>
-        @if (allPalabras != null)
-        {
-            <div class="col-sm-2">
-                <button @onclick="ShowWordsList" class="btn btn-scnd">Todos las palabras</button>
+        <div class="row">
+            <div class="col-sm-1">
+                <a href="/.auth/login/google" class="btn btn-scnd">Add word</a>
             </div>
-        }
-    </div>
+            @if (allPalabras != null)
+            {
+                <div class="col-sm-2">
+                    <button @onclick="ShowWordsList" class="btn btn-scnd">Todos las palabras</button>
+                </div>
+            }
+        </div>
 
             @if (isLoggedIn == false)
             {
@@ -101,7 +101,7 @@
 
     private string spanishWord;
     private string englishWord;
-    private Answer submittedWord =new Answer();
+    private Answer submittedWord = new Answer();
     private string displayAnswer = "";
     private bool isCorrectAnswer;
 
@@ -141,7 +141,11 @@
         try
         {
             allPalabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
-            RandomPalabra(allPalabras);
+
+            if(allPalabras != null)
+            {
+                RandomPalabra(allPalabras);
+            }
         }
         catch (Exception ex)
         {
