@@ -8,7 +8,7 @@
         <h1>Palabras</h1>
 
         @*Once styling complete change palabrasList back to allPalabras in two places below.*@
-        @if (allPalabras == null)
+        @*@if (allPalabras == null)
         {
             <h5>It's on its way...</h5>
         }
@@ -28,7 +28,7 @@
                 }
             </div>
 
-        }
+        }*@
 
         <div class="row">
             <div class="col-sm-1">
@@ -42,37 +42,37 @@
             }
         </div>
 
-            @if (isLoggedIn == false)
-            {
-                <h2>Not logged in</h2>
-            }
-            else
-            {
-                <div class="form_block">
-                    <EditForm Model="@newPalabra" OnValidSubmit="@AddPalabra">
-                        <DataAnnotationsValidator />
-                        <label>Spanish</label>
-                        <InputText id="spanishWord" @bind-Value="newPalabra.SpanishWord" />
-                        <br />
-                        <label>English</label>
-                        <InputText id="englishWord" @bind-Value="newPalabra.EnglishWord" />
+        @if (isLoggedIn == false)
+        {
+            <h2>Not logged in</h2>
+        }
+        else
+        {
+            <div class="form_block">
+                <EditForm Model="@newPalabra" OnValidSubmit="@AddPalabra">
+                    <DataAnnotationsValidator />
+                    <label>Spanish</label>
+                    <InputText id="spanishWord" @bind-Value="newPalabra.SpanishWord" />
+                    <br />
+                    <label>English</label>
+                    <InputText id="englishWord" @bind-Value="newPalabra.EnglishWord" />
 
-                        <button class="btn-primary" type="submit">Save</button>
-                    </EditForm>
-                </div>
-            }
+                    <button class="btn-primary" type="submit">Save</button>
+                </EditForm>
+            </div>
+        }
 
-            @if (showWordsList && allPalabras != null)
+        @*@if (showWordsList && allPalabras != null)
+        {
+            @foreach (var singlePalabra in allPalabras)
             {
-                @foreach (var singlePalabra in allPalabras)
-                {
-                    <ul class="list-group">
-                        <li class="list-group-item">@singlePalabra.SpanishWord : @singlePalabra.EnglishWord</li>
-                    </ul>
-                }
+                <ul class="list-group">
+                    <li class="list-group-item">@singlePalabra.SpanishWord : @singlePalabra.EnglishWord</li>
+                </ul>
             }
+        }*@
 
-        
+
 
         @if (showError)
         {
