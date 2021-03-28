@@ -14,8 +14,23 @@
         }
         else
         {
+    <div class="main_spanish_content">
 
-            <h3>Is not null</h3>
+        @if (palabra != null)
+        {
+            <h4>@palabra.EnglishWord</h4>
+        }
+
+        <EditForm Model="@submittedWord" OnSubmit="@CheckWord">
+            <InputText id="submit_word" @bind-Value="submittedWord.AnswerText" />
+            <button type="submit">Check</button>
+        </EditForm>
+
+        @if (displayAnswer != "")
+        {
+            <h4 class="@(isCorrectAnswer ? "correct" : "wrong")">@displayAnswer</h4>
+        }
+    </div>
         }
 
 
