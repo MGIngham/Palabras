@@ -8,27 +8,28 @@
         <h1>Palabras</h1>
 
         @*Once styling complete change palabrasList back to allPalabras in two places below.*@
-        @*@if (allPalabras == null)
+        @if (allPalabras == null)
         {
             <h5>It's on its way...</h5>
         }
         else
         {
-            <div class="main_spanish_content">
-                <h4>@palabra.EnglishWord</h4>
+        <div class="main_spanish_content">
 
-                <EditForm Model="@submittedWord" OnSubmit="@CheckWord">
-                    <InputText id="submit_word" @bind-Value="submittedWord.AnswerText" />
-                    <button type="submit">Check</button>
-                </EditForm>
+            <h4>@palabra.EnglishWord</h4>
 
-                @if (displayAnswer != "")
-                {
-                    <h4 class="@(isCorrectAnswer ? "correct" : "wrong")">@displayAnswer</h4>
-                }
-            </div>
+            <EditForm Model="@submittedWord" OnSubmit="@CheckWord">
+                <InputText id="submit_word" @bind-Value="submittedWord.AnswerText" />
+                <button type="submit">Check</button>
+            </EditForm>
 
-        }*@
+            @if (displayAnswer != "")
+            {
+                <h4 class="@(isCorrectAnswer ? "correct" : "wrong")">@displayAnswer</h4>
+            }
+        </div>
+
+        }
 
         <div class="row">
             <div class="col-sm-1">
