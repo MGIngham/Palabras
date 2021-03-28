@@ -19,12 +19,15 @@
         @if (palabra != null)
         {
             <h4>@palabra.EnglishWord</h4>
-        }
 
-        <EditForm Model="@submittedWord" OnSubmit="@CheckWord">
-            <InputText id="submit_word" @bind-Value="submittedWord.AnswerText" />
-            <button type="submit">Check</button>
-        </EditForm>
+            <EditForm Model="@submittedWord" OnSubmit="@CheckWord">
+                <InputText id="submit_word" @bind-Value="submittedWord.AnswerText" />
+                <button type="submit">Check</button>
+            </EditForm>
+        } else
+        {
+            <span>You don't have any words in your list yet.</span>
+        }
 
         @if (displayAnswer != "")
         {
