@@ -1,0 +1,52 @@
+﻿@using PalabrasApp.Shared
+
+@if (palabra != null)
+{
+    <h4>@palabra.EnglishWord</h4>
+
+    <EditForm Model="@submittedWord" OnSubmit="@CheckWord">
+        <InputText id="submit_word" @bind-Value="submittedWord.AnswerText" />
+        <button type="submit">Check</button>
+    </EditForm>
+}
+else
+{
+    <span>You don't have any words in your list yet.</span>
+}
+
+@if (displayAnswer != "")
+{
+    <h4 class="@(isCorrectAnswer ? "correct" : "wrong")">@displayAnswer</h4>
+}
+
+@code {
+
+    [Parameter]
+    public Palabra palabra { get; set; }
+    private string spanishWord;
+    private string englishWord;
+    private Answer submittedWord = new Answer();
+    private string displayAnswer = "";
+    private bool isCorrectAnswer;
+
+    protected void CheckWord()
+    {
+        Console.WriteLine("Method executed!");
+        var correctWord = palabra.SpanishWord.ToLower();
+        var givenWord = submittedWord.AnswerText.ToLower();
+
+        displayAnswer = givenWord;
+        Console.WriteLine(displayAnswer);
+        Console.WriteLine(correctWord);
+        Console.WriteLine(givenWord);
+
+        if (correctWord == givenWord)
+        {
+            isCorrectAnswer = true;
+        }
+        else
+        {
+            isCorrectAnswer = false;
+        }
+    }
+}
