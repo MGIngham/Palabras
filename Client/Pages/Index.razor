@@ -71,15 +71,8 @@
 
         @if (showWordsList && allPalabras != null)
         {
-            @foreach (var singlePalabra in palabrasList)
-            {
-                <ul class="list-group">
-                    <li class="list-group-item">@singlePalabra.SpanishWord : @singlePalabra.EnglishWord</li>
-                </ul>
-            }
+           <WordsList palabras="@palabrasList"></WordsList>
         }
-
-
 
         @if (showError)
         {
@@ -222,7 +215,8 @@
         if(correctWord == givenWord)
         {
             isCorrectAnswer = true;
-        } else
+        } 
+        else
         {
             isCorrectAnswer = false;
         }
