@@ -2,22 +2,31 @@
 
 @if (palabra != null)
 {
-    <h4>@palabra.EnglishWord</h4>
+    <h4>@palabra.EnglishWord</h4><a @onclick="toggleShowAnswer">&#128065;</a>
+
+    @if (displayAnswer)
+    {
+        <h3>@palabra.SpanishWord</h3>
+    }
 
     <EditForm Model="@submittedWord" OnSubmit="@CheckWord">
         <InputText id="submit_word" @bind-Value="submittedWord.AnswerText" />
         <button type="submit">Check</button>
     </EditForm>
+
+    @if(isCorrectAnswer)
+    {
+        <span class="correct">&#x2714;</span>
+    } else
+    {
+        <span class="wrong">&#x2716;</span>
+    }
 }
 else
 {
     <span>You don't have any words in your list yet.</span>
 }
 
-@if (displayAnswer != "")
-{
-    <h4 class="@(isCorrectAnswer ? "correct" : "wrong")">@displayAnswer</h4>
-}
 
 @code {
 
@@ -26,7 +35,7 @@ else
     private string spanishWord;
     private string englishWord;
     private Answer submittedWord = new Answer();
-    private string displayAnswer = "";
+    private bool displayAnswer = false;
     private bool isCorrectAnswer;
 
     protected void CheckWord()
@@ -34,11 +43,6 @@ else
         Console.WriteLine("Method executed!");
         var correctWord = palabra.SpanishWord.ToLower();
         var givenWord = submittedWord.AnswerText.ToLower();
-
-        displayAnswer = givenWord;
-        Console.WriteLine(displayAnswer);
-        Console.WriteLine(correctWord);
-        Console.WriteLine(givenWord);
 
         if (correctWord == givenWord)
         {
@@ -48,5 +52,10 @@ else
         {
             isCorrectAnswer = false;
         }
+    }
+
+    protected void toggleShowAnswer()
+    {
+        displayAnswer = !displayAnswer;
     }
 }
