@@ -33,6 +33,12 @@ h1 {
 .btn-scnd {
     background-color: #993399;
     color: #fff;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#submit_word {
+    margin-bottom: 15px;
 }
 
 .correct {
