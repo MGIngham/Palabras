@@ -4,63 +4,91 @@
 @inject HttpClient Http
 @inject NavigationManager Nav
 
+    <div class="main_content">
+        <h1>Palabras</h1>
 
-<h1>Palabras</h1>
+        @*Once styling complete change palabrasList back to allPalabras in two places below.*@
+        @if (allPalabras == null)
+        {
+            <h5>It's on its way...</h5>
+        }
+        else
+        {
+    <div class="main_spanish_content">
+        <h4>@palabra.EnglishWord</h4>
 
-@if (allPalabras == null)
-{
-    <h3>It's on its way...</h3>
-}
-else
-{
-    <h2>@palabra.SpanishWord = @palabra.EnglishWord</h2>
+        <EditForm Model="@submittedWord" OnSubmit="@CheckWord">
+            <InputText id="submit_word" @bind-Value="submittedWord.AnswerText" />
+            <button type="submit">Check</button>
+        </EditForm>
 
-    <h3>Todos las palabras</h3>
-    @foreach (var singlePalabra in allPalabras)
-    {
-        <ul>
-            <li>@singlePalabra.SpanishWord : @singlePalabra.EnglishWord</li>
-        </ul>
-    }
-}
-
-<div>
-    <a href="/.auth/login/google">Add word</a>
-</div>
-
-@if (isLoggedIn == false)
-{
-    <h2>Not logged in</h2>
-}
-else
-{
-    <EditForm Model="@newPalabra" OnValidSubmit="@AddPalabra">
-        <DataAnnotationsValidator />
-        <label>Spanish</label>
-        <InputText id="spanishWord" @bind-Value="newPalabra.SpanishWord" />
-        <br />
-        <label>English</label>
-        <InputText id="englishWord" @bind-Value="newPalabra.EnglishWord" />
-
-        <button type="submit">Save</button>
-    </EditForm>
-}
-
-<div>
-    <a href="/.auth/logout">Logout</a>
-</div>
-
-@if (showError)
-{
-    <span id="httpErrorComponent">@errorText</span>
-    <div>
-        <a href="/.auth/login/google">Add word</a>
+        @if (displayAnswer != "")
+        {
+            <h4 class="@(isCorrectAnswer ? "correct" : "wrong")">@displayAnswer</h4>
+        }
     </div>
-}
 
-<h2>@ili</h2>
+            <div class="row">
+                <div class="col-sm-1">
+                    <a href="/.auth/login/google" class="btn btn-scnd">Add word</a>
+                </div>
+                <div class="col-sm-2">
+                    <button @onclick="ShowWordsList" class="btn btn-scnd">Todos las palabras</button>
+                </div>
+            </div>
+
+            @if (isLoggedIn == false)
+            {
+                <h2>Not logged in</h2>
+            }
+            else
+            {
+                <div class="form_block">
+                    <EditForm Model="@newPalabra" OnValidSubmit="@AddPalabra">
+                        <DataAnnotationsValidator />
+                        <label>Spanish</label>
+                        <InputText id="spanishWord" @bind-Value="newPalabra.SpanishWord" />
+                        <br />
+                        <label>English</label>
+                        <InputText id="englishWord" @bind-Value="newPalabra.EnglishWord" />
+
+                        <button class="btn-primary" type="submit">Save</button>
+                    </EditForm>
+                </div>
+            }
+
+            @if (showWordsList)
+            {
+                @foreach (var singlePalabra in allPalabras)
+                {
+                    <ul class="list-group">
+                        <li class="list-group-item">@singlePalabra.SpanishWord : @singlePalabra.EnglishWord</li>
+                    </ul>
+                }
+            }
+
+        }
+
+        @if (showError)
+        {
+            <span id="httpErrorComponent">@errorText</span>
+            <a href="/.auth/login/google" class="btn btn-secondary">
+                Add word
+            </a>
+
+        }
+
+    </div>
+
+<div>
+    <a href="/.auth/logout" class="btn btn-secondary">Logout</a>
+</div>
+
 
 @code {
+
+    //Testing variables
+    //private List<Palabra> palabrasList = new List<Palabra>();
 
     private IEnumerable<Palabra> allPalabras;
     private Palabra palabra;
@@ -68,15 +96,42 @@ else
 
     private string spanishWord;
     private string englishWord;
+    private Answer submittedWord =new Answer();
+    private string displayAnswer = "";
+    private bool isCorrectAnswer;
 
+
+    //Change this back to false when testing complete.
     private bool isLoggedIn = false;
     private string ili;
     private bool showError = false;
     private string errorText;
+    private bool showWordsList = false;
 
 
     protected override async Task OnInitializedAsync()
     {
+        /*palabra = new Palabra
+        {
+            SpanishWord = "Pollo",
+            EnglishWord = "Chicken"
+        };
+
+        palabrasList.Add(new Palabra()
+        {
+            SpanishWord = "Perro",
+            EnglishWord = "Dog"
+        });
+        palabrasList.Add(new Palabra()
+        {
+            SpanishWord = "Gato",
+            EnglishWord = "Cat"
+        });
+        palabrasList.Add(new Palabra()
+        {
+            SpanishWord = "Oso",
+            EnglishWord = "Bear"
+        });*/
 
         try
         {
@@ -127,6 +182,31 @@ else
         var randomPalabraIndex = random.Next(0, palabrasLength);
         palabra = palabrasList[randomPalabraIndex];
         return palabra;
+    }
+
+    protected void ShowWordsList()
+    {
+        showWordsList = !showWordsList;
+    }
+
+    protected void CheckWord()
+    {
+        Console.WriteLine("Method executed!");
+        var correctWord = palabra.SpanishWord.ToLower();
+        var givenWord = submittedWord.AnswerText.ToLower();
+
+        displayAnswer = givenWord;
+        Console.WriteLine(displayAnswer);
+        Console.WriteLine(correctWord);
+        Console.WriteLine(givenWord);
+
+        if(correctWord == givenWord)
+        {
+            isCorrectAnswer = true;
+        } else
+        {
+            isCorrectAnswer = false;
+        }
     }
 
 }
