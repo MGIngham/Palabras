@@ -18,7 +18,7 @@
 
         @if (palabra != null)
         {
-            <h4>@palabra.EnglishWord</h4>
+            <h4>@palabra.EnglishWord <a @onclick="RefreshRandomWord">&#x21BB;</a></h4>
 
             <EditForm Model="@submittedWord" OnSubmit="@CheckWord">
                 <InputText id="submit_word" @bind-Value="submittedWord.AnswerText" />
@@ -103,6 +103,7 @@
     //private List<Palabra> palabrasList = new List<Palabra>();
 
     private IEnumerable<Palabra> allPalabras;
+    private List<Palabra> palabrasList = new List<Palabra>();
     private Palabra palabra;
     private Palabra newPalabra = new Palabra();
 
@@ -149,9 +150,10 @@
         {
             allPalabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
 
+            palabrasList = allPalabras.ToList();
             if(allPalabras != null)
             {
-                RandomPalabra(allPalabras);
+                RandomPalabra(palabrasList);
             }
         }
         catch (Exception ex)
@@ -178,6 +180,7 @@
         {
             await Http.PostAsJsonAsync<Palabra>("/api/AddPalabra", newPalabra);
             Console.WriteLine(newPalabra.SpanishWord + " = " + newPalabra.EnglishWord);
+            palabrasList.Add(newPalabra);
             newPalabra = new Palabra();
         }
 
@@ -190,7 +193,7 @@
 
     }
 
-    protected Palabra RandomPalabra(IEnumerable<Palabra> palabras)
+    protected Palabra RandomPalabra(List<Palabra> palabras)
     {
         var palabrasList = palabras.ToList();
         var palabrasLength = palabrasList.Count();
@@ -223,6 +226,11 @@
         {
             isCorrectAnswer = false;
         }
+    }
+
+    protected void RefreshRandomWord ()
+    {
+        RandomPalabra(palabrasList);
     }
 
 }
