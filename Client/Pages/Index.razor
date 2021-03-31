@@ -5,7 +5,7 @@
 @inject NavigationManager Nav
 
     <div class="main_content">
-        <h1>Palabras</h1><a @onclick="RandomPalabra">&#x21BB;</a>
+        <h1>Palabras</h1><a @onclick="RefreshWord">&#x21BB;</a>
 
         @*Once styling complete change palabrasList back to allPalabras in two places below.*@
         @if (allPalabras == null)
@@ -15,7 +15,7 @@
         else
         {
             <div class="main_spanish_content row">
-                <RandomWord palabra="@palabra"></RandomWord>
+                <RandomWord palabra="@palabra" isCorrectSymbol="@refreshCorrectSymbol"></RandomWord>
             </div>
         }
 
@@ -82,6 +82,7 @@
     private List<Palabra> palabrasList = new List<Palabra>();
     private Palabra palabra;
     private Palabra newPalabra = new Palabra();
+    private string refreshCorrectSymbol;
 
 
     //Change this back to false when testing complete.
@@ -124,6 +125,7 @@
             if(allPalabras != null)
             {
                 RandomPalabra();
+                refreshCorrectSymbol = "";
             }
         }
         catch (Exception ex)
@@ -174,6 +176,12 @@
     protected void ShowWordsList()
     {
         showWordsList = !showWordsList;
+    }
+
+    protected void RefreshWord ()
+    {
+        RandomPalabra();
+        refreshCorrectSymbol = "";
     }
 
 }

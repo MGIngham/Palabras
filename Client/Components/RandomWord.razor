@@ -4,6 +4,8 @@
 {
     <h4>@palabra.EnglishWord</h4><a @onclick="toggleShowAnswer">&#128065;</a>
 
+    <br />
+
     @if (displayAnswer)
     {
         <h3>@palabra.SpanishWord</h3>
@@ -32,7 +34,8 @@ else
     private Answer submittedWord = new Answer();
     private bool displayAnswer = false;
     private bool isCorrectAnswer;
-    private string isCorrectSymbol = "";
+    [Parameter]
+    public MarkupString isCorrectSymbol { get; set; }
 
     protected void CheckWord()
     {
@@ -49,7 +52,8 @@ else
             isCorrectAnswer = false;
         }
 
-        isCorrectSymbol = isCorrectAnswer ? "&#x2714;" : "&#x2716;";
+        var correctString = isCorrectAnswer ? "&#x2714;" : "&#x2716;";
+        isCorrectSymbol = (MarkupString)correctString;
     }
 
     protected void toggleShowAnswer()
