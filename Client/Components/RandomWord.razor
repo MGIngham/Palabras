@@ -14,13 +14,8 @@
         <button type="submit">Check</button>
     </EditForm>
 
-    @if(isCorrectAnswer)
-    {
-        <span class="correct">&#x2714;</span>
-    } else
-    {
-        <span class="wrong">&#x2716;</span>
-    }
+    <span class="@(isCorrectAnswer ? "correct" : "wrong")">@isCorrectSymbol</span>
+
 }
 else
 {
@@ -37,6 +32,7 @@ else
     private Answer submittedWord = new Answer();
     private bool displayAnswer = false;
     private bool isCorrectAnswer;
+    private string isCorrectSymbol = "";
 
     protected void CheckWord()
     {
@@ -52,6 +48,8 @@ else
         {
             isCorrectAnswer = false;
         }
+
+        isCorrectSymbol = isCorrectAnswer ? "&#x2714;" : "&#x2716;";
     }
 
     protected void toggleShowAnswer()
