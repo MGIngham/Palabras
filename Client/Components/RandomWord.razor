@@ -2,37 +2,32 @@
 
 @if (palabra != null)
 {
-        <h4>@palabra.EnglishWord</h4>
+    <h4>@palabra.EnglishWord</h4>
 
-        <a @onclick="toggleShowAnswer">&#128065;</a>
+    <a @onclick="toggleShowAnswer">&#128065;</a>
 
-        <br />
 
-        <div class="row">
+    <EditForm Model="@submittedWord" OnSubmit="@CheckWord">
+        <InputText id="submit_word" @bind-Value="submittedWord.AnswerText" />
+        <button type="submit">Check</button>
+    </EditForm>
 
-        <br />
+    @if (isCorrectAnswer)
+    {
+        <span>&#x2714;</span>
+    }
 
-        @if (displayAnswer)
-        {
-            <h3>@palabra.SpanishWord</h3>
-        
-        }
-        </div>
-        <EditForm Model="@submittedWord" OnSubmit="@CheckWord">
-            <InputText id="submit_word" @bind-Value="submittedWord.AnswerText" />
-            <button type="submit">Check</button>
-        </EditForm>
+    @if (displayAnswer)
+    {
+        <h3>@palabra.SpanishWord</h3>
 
-        @if (isCorrectAnswer)
-        {
-            <span class="correct_answer">&#x2714;</span>
-        }
+    }
 
-        }
-        else
-        {
-        <span>You don't have any words in your list yet.</span>
-        }
+}
+else
+{
+    <span>You don't have any words in your list yet.</span>
+}
 
 
 @code {
