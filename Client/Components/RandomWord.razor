@@ -4,16 +4,12 @@
 {
     <h4>@palabra.EnglishWord</h4><a @onclick="toggleShowAnswer">&#128065;</a>
 
-    <br />
-    <br />
 
     @if (displayAnswer)
     {
-        <br />
-        <br />
-        <br />
-        <br />
-        <h3>@palabra.SpanishWord</h3>
+        <div class="row">
+            <h3>@palabra.SpanishWord</h3>
+        </div>
     }
 
     <EditForm Model="@submittedWord" OnSubmit="@CheckWord">
@@ -23,11 +19,11 @@
 
     @if (isCorrectAnswer == false && isCorrectSymbol != "refreshed")
     {
-        <span class="wrong">&#x2714;</span>
+        <span class="wrong_answer">&#x2716;</span>
     }
     else if (isCorrectAnswer)
     {
-        <span class="correct">&#x2716;</span>
+        <span class="correct_answer">&#x2714;</span>
     }
 
 }

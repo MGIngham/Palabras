@@ -41,11 +41,11 @@ h1 {
     margin-bottom: 15px;
 }
 
-.correct {
+.correct_answer {
     color: green;
 }
 
-.wrong {
+.wrong_answer {
     color: orangered;
 }
 
