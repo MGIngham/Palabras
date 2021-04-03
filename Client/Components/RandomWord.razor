@@ -5,6 +5,7 @@
         <h4>@palabra.EnglishWord</h4><a @onclick="toggleShowAnswer">&#128065;</a>
         <div class="row">
 
+        <br />
 
         @if (displayAnswer)
         {
@@ -17,11 +18,7 @@
             <button type="submit">Check</button>
         </EditForm>
 
-        @if (!isCorrectAnswer)
-        {
-            <span class="wrong_answer">&#x2716;</span>
-        }
-        else
+        @if (isCorrectAnswer)
         {
             <span class="correct_answer">&#x2714;</span>
         }
