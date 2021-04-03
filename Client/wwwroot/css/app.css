@@ -45,10 +45,6 @@ h1 {
     color: green;
 }
 
-.wrong_answer {
-    color: orangered;
-}
-
 app {
     position: relative;
     display: flex;
