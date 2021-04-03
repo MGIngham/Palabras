@@ -10,7 +10,9 @@
     @if (displayAnswer)
     {
         <br />
-
+        <br />
+        <br />
+        <br />
         <h3>@palabra.SpanishWord</h3>
     }
 
@@ -19,7 +21,7 @@
         <button type="submit">Check</button>
     </EditForm>
 
-    @if (!isCorrectAnswer && isCorrectSymbol != "")
+    @if (isCorrectAnswer == false && isCorrectSymbol != "refreshed")
     {
         <span class="wrong">&#x2714;</span>
     }
