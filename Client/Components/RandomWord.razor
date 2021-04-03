@@ -16,7 +16,13 @@
         <button type="submit">Check</button>
     </EditForm>
 
-    <span class="@(isCorrectAnswer ? "correct" : "wrong")">@isCorrectSymbol</span>
+    @if(isCorrectAnswer && isCorrectSymbol != "")
+    {
+        <span class="correct">&#x2714;</span>
+    } else if(!isCorrectAnswer && isCorrectSymbol != "")
+    {
+        <span class="wrong">&#x2716;</span>
+    }
 
 }
 else
@@ -35,7 +41,7 @@ else
     private bool displayAnswer = false;
     private bool isCorrectAnswer;
     [Parameter]
-    public MarkupString isCorrectSymbol { get; set; }
+    public string isCorrectSymbol { get; set; }
 
     protected void CheckWord()
     {
@@ -52,8 +58,6 @@ else
             isCorrectAnswer = false;
         }
 
-        var correctString = isCorrectAnswer ? "&#x2714;" : "&#x2716;";
-        isCorrectSymbol = (MarkupString)correctString;
     }
 
     protected void toggleShowAnswer()
