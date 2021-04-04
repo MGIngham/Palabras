@@ -31,8 +31,8 @@
 
     <br />
 
-    <div class="row">
-        <div class="col-12" id="displayAnswer">
+    <div class="row" id="displayAnswer">
+        <div class="col-12">
             @if (displayAnswer)
             {
                 <h3>@palabra.SpanishWord</h3>
@@ -72,6 +72,7 @@ else
         else
         {
             isCorrectAnswer = false;
+            wordRefreshed = false;
         }
 
     }
