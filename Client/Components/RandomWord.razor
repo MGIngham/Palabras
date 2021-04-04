@@ -14,15 +14,6 @@
 
     <br />
 
-    <div class="row">
-
-        @if (displayAnswer)
-        {
-            <h3>@palabra.SpanishWord</h3>
-        }
-
-    </div>
-
     <br />
 
     <div class="row">
@@ -34,6 +25,15 @@
             else
             {
                 <h3 class="wrong_color">X</h3>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            @if (displayAnswer)
+            {
+                <h3>@palabra.SpanishWord</h3>
             }
         </div>
     </div>
