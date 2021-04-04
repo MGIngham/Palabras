@@ -14,17 +14,23 @@
 
     <br />
 
-    @if (displayAnswer)
-    {
-        <h3>@palabra.SpanishWord</h3>
-    }
+    <div class="row">
+
+        @if (displayAnswer)
+        {
+            <h3>@palabra.SpanishWord</h3>
+        }
+
+    </div>
+
+    <br />
 
     @if(isCorrectAnswer)
     {
-        <h3 class="correct_color">Correct</h3>
+        <h3 class="correct_color">&#x2714;</h3>
     } else
     {
-        <h3 class="wrong_color">Wrong</h3>
+        <h3 class="wrong_color">&#x2716;</h3>
     }
 
 }
