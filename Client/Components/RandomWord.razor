@@ -22,7 +22,7 @@
             {
                 <h3 class="correct_color">&#10003;</h3>
             }
-            else
+            else if(isCorrectAnswer == false && wordRefresh == true)
             {
                 <h3 class="wrong_color">X</h3>
             }
@@ -56,6 +56,8 @@ else
     private Answer submittedWord = new Answer();
     private bool displayAnswer = false;
     private bool isCorrectAnswer;
+    [Parameter]
+    public bool wordRefreshed { get; set; }
 
     protected void CheckWord()
     {

@@ -15,7 +15,7 @@
         else
         {
             <div class="main_spanish_content row">
-                <RandomWord palabra="@palabra"></RandomWord>
+                <RandomWord palabra="@palabra" wordRefreshed="@wordRefresh"></RandomWord>
             </div>
         }
 
@@ -82,6 +82,7 @@
     private Palabra palabra;
     private Palabra newPalabra = new Palabra();
     private string refreshCorrectSymbol;
+    private bool wordRefresh = false;
 
 
     //Change this back to false when testing complete.
