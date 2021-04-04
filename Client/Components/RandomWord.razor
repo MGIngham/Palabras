@@ -25,13 +25,18 @@
 
     <br />
 
-    @if(isCorrectAnswer)
-    {
-        <h3 class="correct_color">&#x2714;</h3>
-    } else
-    {
-        <h3 class="wrong_color">&#x2716;</h3>
-    }
+    <div class="row">
+        <div class="col-12">
+            @if (isCorrectAnswer)
+            {
+                <h3 class="correct_color">&#x2714;</h3>
+            }
+            else
+            {
+                <h3 class="wrong_color">X</h3>
+            }
+        </div>
+    </div>
 
 }
 else
