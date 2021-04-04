@@ -19,6 +19,14 @@
         <h3>@palabra.SpanishWord</h3>
     }
 
+    @if(isCorrectAnswer)
+    {
+        <h3 class="correct_color">Correct</h3>
+    } else
+    {
+        <h3 class="wrong_color">Wrong</h3>
+    }
+
 }
 else
 {
