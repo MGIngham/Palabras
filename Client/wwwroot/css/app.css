@@ -41,10 +41,6 @@ h1 {
     margin-bottom: 15px;
 }
 
-.correct_answer {
-    color: green;
-}
-
 app {
     position: relative;
     display: flex;
