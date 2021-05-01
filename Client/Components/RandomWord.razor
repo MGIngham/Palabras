@@ -1,4 +1,5 @@
 ﻿@using PalabrasApp.Shared
+@inject Services.WordsList Words
 
 @if (palabra != null)
 {
@@ -18,11 +19,11 @@
 
     <div class="row">
         <div class="col-12">
-            @if (isCorrectAnswer && wordRefreshed == true)
+            @if (isCorrectAnswer)
             {
                 <h3 class="correct_color">&#10003; @palabra.SpanishWord</h3>
             }
-            else if(isCorrectAnswer == false && wordRefreshed == true)
+            else if(isCorrectAnswer)
             {
                 <h3 class="wrong_color">X</h3>
             }
@@ -49,15 +50,17 @@ else
 
 @code {
 
-    [Parameter]
-    public Palabra palabra { get; set; }
+    public Palabra palabra;
     private string spanishWord;
     private string englishWord;
     private Answer submittedWord = new Answer();
     private bool displayAnswer = false;
     private bool isCorrectAnswer;
-    [Parameter]
-    public bool wordRefreshed { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        RandomPalabra();
+    }
 
     protected void CheckWord()
     {
@@ -68,13 +71,11 @@ else
         if (correctWord == givenWord)
         {
             isCorrectAnswer = true;
-            wordRefreshed = true;
             submittedWord = new Answer();
         }
         else
         {
             isCorrectAnswer = false;
-            wordRefreshed = true;
         }
 
     }
@@ -82,5 +83,13 @@ else
     protected void toggleShowAnswer()
     {
         displayAnswer = !displayAnswer;
+    }
+
+    protected void RandomPalabra()
+    {
+        var palabrasLength = Words.palabras.Count();
+        Random random = new Random();
+        var randomPalabraIndex = random.Next(0, palabrasLength);
+        palabra = Words.palabras[randomPalabraIndex];
     }
 }

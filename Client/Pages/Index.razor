@@ -3,19 +3,20 @@
 @using System.Text.Json
 @inject HttpClient Http
 @inject NavigationManager Nav
+@inject Services.WordsList Words
 
     <div class="main_content">
-        <h1>Palabras</h1><a @onclick="RefreshWord">&#x21BB;</a>
+        <h1>Palabras</h1><a>&#x21BB;</a>
 
         @*Once styling complete change palabrasList back to allPalabras in two places below.*@
-        @if (allPalabras == null)
+        @if (Words.palabras == null)
         {
             <h5>It's on its way...</h5>
         }
         else
         {
             <div class="main_spanish_content row">
-                <RandomWord palabra="@palabra" wordRefreshed="@wordRefresh"></RandomWord>
+                <RandomWord></RandomWord>
             </div>
         }
 
@@ -24,7 +25,7 @@
             <div class="col-sm-1">
                 <a href="/.auth/login/google" class="btn btn-scnd">Add word</a>
             </div>
-            @if (allPalabras != null)
+            @if (Words.palabras != null)
             {
                 <div class="col-sm-2">
                     <button @onclick="ShowWordsList" class="btn btn-scnd">Todos las palabras</button>
@@ -52,9 +53,9 @@
             </div>
         }
 
-        @if (showWordsList && allPalabras != null)
+        @if (showWordsList && Words.palabras != null)
         {
-            <WordsList palabras="@palabrasList"></WordsList>
+            <WordsList></WordsList>
         }
 
         @if (showError)
@@ -76,9 +77,8 @@
 @code {
 
     //Testing variables
-   // private List<Palabra> palabrasList = new List<Palabra>();
+    // private List<Palabra> palabrasList = new List<Palabra>();
     private IEnumerable<Palabra> allPalabras;
-    private List<Palabra> palabrasList = new List<Palabra>();
     private Palabra palabra;
     private Palabra newPalabra = new Palabra();
     private string refreshCorrectSymbol;
@@ -95,54 +95,34 @@
 
     protected override async Task OnInitializedAsync()
     {
-        /*palabra = new Palabra
-        {
-            SpanishWord = "Pollo",
-            EnglishWord = "Chicken"
-        };
 
-        palabrasList.Add(new Palabra()
-        {
-            SpanishWord = "Perro",
-            EnglishWord = "Dog"
-        });
-        palabrasList.Add(new Palabra()
-        {
-            SpanishWord = "Gato",
-            EnglishWord = "Cat"
-        });
-        palabrasList.Add(new Palabra()
-        {
-            SpanishWord = "Oso",
-            EnglishWord = "Bear"
-        });*/
+        //try
+        //{
+        //    allPalabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
 
-        try
-        {
-            allPalabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
-
-            palabrasList = allPalabras.ToList();
-            if(allPalabras != null)
-            {
-                RandomPalabra();
-                refreshCorrectSymbol = "refreshed";
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
+        //    palabrasList = allPalabras.ToList();
+        //    if(allPalabras != null)
+        //    {
+        //        RandomPalabra();
+        //        refreshCorrectSymbol = "refreshed";
+        //    }
+        //}
+        //catch (Exception ex)
+        //{
+        //    Console.WriteLine(ex.ToString());
+        //}
 
 
-        var data = await Http.GetFromJsonAsync<JsonElement>("/.auth/me");
-        var ili = data.GetProperty("clientPrincipal").ToString();
+        //var data = await Http.GetFromJsonAsync<JsonElement>("/.auth/me");
+        //var ili = data.GetProperty("clientPrincipal").ToString();
 
-        if (ili != "")
-        {
-            isLoggedIn = true;
-            Console.WriteLine(ili);
-        }
+        //if (ili != "")
+        //{
+        //    isLoggedIn = true;
+        //    Console.WriteLine(ili);
+        //}
 
+        Words.getPalabras();
     }
 
     protected async Task AddPalabra()
@@ -152,7 +132,7 @@
         {
             await Http.PostAsJsonAsync<Palabra>("/api/AddPalabra", newPalabra);
             Console.WriteLine(newPalabra.SpanishWord + " = " + newPalabra.EnglishWord);
-            palabrasList.Add(newPalabra);
+            //palabrasList.Add(newPalabra);
             newPalabra = new Palabra();
         }
 
@@ -165,24 +145,16 @@
 
     }
 
-    protected void RandomPalabra()
-    {
-        var palabrasLength = palabrasList.Count();
-        Random random = new Random();
-        var randomPalabraIndex = random.Next(0, palabrasLength);
-        palabra = palabrasList[randomPalabraIndex];
-    }
-
     protected void ShowWordsList()
     {
         showWordsList = !showWordsList;
     }
 
-    protected void RefreshWord ()
-    {
-        RandomPalabra();
-        wordRefresh = false;
-    }
+    //protected void RefreshWord ()
+    //{
+    //    RandomPalabra();
+    //    wordRefresh = false;
+    //}
 
 }
 

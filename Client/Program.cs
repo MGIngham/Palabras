@@ -15,7 +15,7 @@ namespace PalabrasApp.Client
 
             var baseAddress = builder.Configuration["BaseAddress"] ?? builder.HostEnvironment.BaseAddress;
             builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(baseAddress) });
-
+            builder.Services.AddSingleton<Services.WordsList>();
             await builder.Build().RunAsync();
         }
     }

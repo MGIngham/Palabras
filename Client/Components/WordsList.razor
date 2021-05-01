@@ -1,7 +1,8 @@
 ﻿@using PalabrasApp.Shared
+@inject Services.WordsList Words
 
 
-@foreach (var singlePalabra in palabras)
+@foreach (var singlePalabra in Words.palabras)
 {
     <ul class="list-group">
         <li class="list-group-item">@singlePalabra.SpanishWord : @singlePalabra.EnglishWord</li>
@@ -9,6 +10,9 @@
 }
 
 @code {
-    [Parameter]
-    public List<Palabra> palabras { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Words.OnChange += StateHasChanged;
+    }
 }
