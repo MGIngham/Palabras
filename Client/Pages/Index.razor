@@ -6,7 +6,7 @@
 @inject Services.WordsList Words
 
     <div class="main_content">
-        <h1>Palabras</h1><a>&#x21BB;</a>
+        <h1>Palabras</h1>
 
         @*Once styling complete change palabrasList back to allPalabras in two places below.*@
         @if (Words.palabras == null)
@@ -96,33 +96,28 @@
     protected override async Task OnInitializedAsync()
     {
 
-        //try
-        //{
-        //    allPalabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
+        try
+        {
+            allPalabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
 
-        //    palabrasList = allPalabras.ToList();
-        //    if(allPalabras != null)
-        //    {
-        //        RandomPalabra();
-        //        refreshCorrectSymbol = "refreshed";
-        //    }
-        //}
-        //catch (Exception ex)
-        //{
-        //    Console.WriteLine(ex.ToString());
-        //}
+            Words.palabras = allPalabras.ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
 
 
-        //var data = await Http.GetFromJsonAsync<JsonElement>("/.auth/me");
-        //var ili = data.GetProperty("clientPrincipal").ToString();
+        var data = await Http.GetFromJsonAsync<JsonElement>("/.auth/me");
+        var ili = data.GetProperty("clientPrincipal").ToString();
 
-        //if (ili != "")
-        //{
-        //    isLoggedIn = true;
-        //    Console.WriteLine(ili);
-        //}
+        if (ili != "")
+        {
+            isLoggedIn = true;
+            Console.WriteLine(ili);
+        }
 
-        Words.getPalabras();
+        //Words.getPalabras();
     }
 
     protected async Task AddPalabra()
@@ -132,8 +127,9 @@
         {
             await Http.PostAsJsonAsync<Palabra>("/api/AddPalabra", newPalabra);
             Console.WriteLine(newPalabra.SpanishWord + " = " + newPalabra.EnglishWord);
-            //palabrasList.Add(newPalabra);
+            Words.palabras.Add(newPalabra);
             newPalabra = new Palabra();
+            Words.ListDataHasChanged();
         }
 
         catch (Exception ex)

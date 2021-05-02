@@ -3,15 +3,31 @@
 
 @if (palabra != null)
 {
-    <h4>@palabra.EnglishWord</h4>
+    <div class="row">
+        <div class="col-sm-6">
+            <h4>@palabra.EnglishWord</h4>
+        </div>
+        <div class="col-sm-3">
+            <a @onclick="toggleShowAnswer">&#128065;</a>
+        </div>
+        <div class="col-sm-3">
+            @if (isCorrectAnswer)
+            {
+                <a @onclick="RefreshRandomWord">&#x21BB;</a>
+            }
+        </div>
+    </div>
 
-    <a @onclick="toggleShowAnswer">&#128065;</a>
-
-
-    <EditForm Model="@submittedWord" OnSubmit="@CheckWord">
-        <InputText id="submit_word" @bind-Value="submittedWord.AnswerText" />
-        <button type="submit">Check</button>
-    </EditForm>
+    <div class="row" id="wordCheckFormContainer">
+        <EditForm Model="@submittedWord" OnSubmit="@CheckWord">
+            <div class="row">
+                <div class="col-12">
+                    <InputText id="submit_word" @bind-Value="submittedWord.AnswerText" />
+                    <button type="submit">Check</button>
+                </div>
+            </div>
+        </EditForm>
+    </div>
 
     <br />
 
@@ -19,13 +35,16 @@
 
     <div class="row">
         <div class="col-12">
-            @if (isCorrectAnswer)
+            @if (showAnswerSymbol)
             {
-                <h3 class="correct_color">&#10003; @palabra.SpanishWord</h3>
-            }
-            else if(isCorrectAnswer)
-            {
-                <h3 class="wrong_color">X</h3>
+                @if (isCorrectAnswer)
+                {
+                    <h3 class="correct_color">&#10003; @palabra.SpanishWord</h3>
+                }
+                else if (!isCorrectAnswer)
+                {
+                    <h3 class="wrong_color">X</h3>
+                }
             }
         </div>
     </div>
@@ -56,10 +75,11 @@ else
     private Answer submittedWord = new Answer();
     private bool displayAnswer = false;
     private bool isCorrectAnswer;
+    private bool showAnswerSymbol = false;
 
     protected override async Task OnInitializedAsync()
     {
-        RandomPalabra();
+        palabra = RandomPalabra();
     }
 
     protected void CheckWord()
@@ -71,11 +91,13 @@ else
         if (correctWord == givenWord)
         {
             isCorrectAnswer = true;
+            showAnswerSymbol = true;
             submittedWord = new Answer();
         }
         else
         {
             isCorrectAnswer = false;
+            showAnswerSymbol = true;
         }
 
     }
@@ -85,11 +107,25 @@ else
         displayAnswer = !displayAnswer;
     }
 
-    protected void RandomPalabra()
+    protected Palabra RandomPalabra()
     {
         var palabrasLength = Words.palabras.Count();
         Random random = new Random();
         var randomPalabraIndex = random.Next(0, palabrasLength);
-        palabra = Words.palabras[randomPalabraIndex];
+        var randomPalabra = Words.palabras[randomPalabraIndex];
+
+        if(Words.palabras.Count > 1)
+        {
+            Words.palabras.RemoveAt(randomPalabraIndex);
+            Words.ListDataHasChanged();
+        }
+
+        return randomPalabra;
+    }
+
+    private void RefreshRandomWord()
+    {
+        palabra = RandomPalabra();
+        showAnswerSymbol = false;
     }
 }

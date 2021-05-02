@@ -59,6 +59,11 @@ app {
     flex-direction: column;
 }
 
+#wordCheckFormContainer {
+    width: 100%;
+    margin-left: 15px;
+}
+
 .top-row {
     height: 3.5rem;
     display: flex;

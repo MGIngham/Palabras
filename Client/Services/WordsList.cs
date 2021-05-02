@@ -10,28 +10,34 @@ namespace PalabrasApp.Client.Services
     {
         public List<Palabra> palabras = new List<Palabra>();
 
-        public void getPalabras()
+        //public void getPalabras()
+        //{
+        //    //Testing List
+        //    palabras.Add(new Palabra()
+        //    {
+        //        SpanishWord = "Perro",
+        //        EnglishWord = "Dog"
+        //    });
+        //    palabras.Add(new Palabra()
+        //    {
+        //        SpanishWord = "Gato",
+        //        EnglishWord = "Cat"
+        //    });
+        //    palabras.Add(new Palabra()
+        //    {
+        //        SpanishWord = "Oso",
+        //        EnglishWord = "Bear"
+        //    });
+        //}
+
+        public void ListDataHasChanged ()
         {
-            //Testing List
-            palabras.Add(new Palabra()
-            {
-                SpanishWord = "Perro",
-                EnglishWord = "Dog"
-            });
-            palabras.Add(new Palabra()
-            {
-                SpanishWord = "Gato",
-                EnglishWord = "Cat"
-            });
-            palabras.Add(new Palabra()
-            {
-                SpanishWord = "Oso",
-                EnglishWord = "Bear"
-            });
+            NotifyDataHasChanged();
         }
 
         public event Action OnChange;
 
-        private void NotifyDataHasChanged() => OnChange?.Invoke(); 
+        private void NotifyDataHasChanged() => OnChange?.Invoke();
+        
     }
 }
