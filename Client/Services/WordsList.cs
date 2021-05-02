@@ -3,12 +3,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
+using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace PalabrasApp.Client.Services
 {
     public class WordsList
     {
         public List<Palabra> palabras = new List<Palabra>();
+        private IEnumerable<Palabra> allPalabras;
+        protected readonly HttpClient Http;
+
+        public async Task GetPalabras ()
+        {
+            try
+            {
+                allPalabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
+
+                palabras = allPalabras.ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
 
         //public void getPalabras()
         //{

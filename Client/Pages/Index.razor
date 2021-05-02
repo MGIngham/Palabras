@@ -95,18 +95,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-
-        try
-        {
-            allPalabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
-
-            Words.palabras = allPalabras.ToList();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
-
+        await Words.GetPalabras();
 
         var data = await Http.GetFromJsonAsync<JsonElement>("/.auth/me");
         var ili = data.GetProperty("clientPrincipal").ToString();
@@ -117,7 +106,6 @@
             Console.WriteLine(ili);
         }
 
-        //Words.getPalabras();
     }
 
     protected async Task AddPalabra()
