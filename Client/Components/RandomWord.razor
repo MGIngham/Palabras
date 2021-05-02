@@ -1,4 +1,6 @@
 ﻿@using PalabrasApp.Shared
+@using System.Text.Json
+@inject HttpClient Http
 @inject Services.WordsList Words
 
 @if (palabra != null)
@@ -69,6 +71,7 @@ else
 
 @code {
 
+    private IEnumerable<Palabra> allPalabras;
     public Palabra palabra;
     private string spanishWord;
     private string englishWord;
@@ -79,12 +82,19 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await Words.GetPalabras();
-
-        if(Words.palabras != null)
+        try
         {
+            allPalabras = await Http.GetFromJsonAsync<IEnumerable<Palabra>>("/api/GetPalabras");
+
+            Words.palabras = allPalabras.ToList();
             palabra = RandomPalabra();
         }
+
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+
     }
 
     protected void CheckWord()
@@ -119,7 +129,7 @@ else
         var randomPalabraIndex = random.Next(0, palabrasLength);
         var randomPalabra = Words.palabras[randomPalabraIndex];
 
-        if(Words.palabras.Count > 1)
+        if (Words.palabras.Count > 1)
         {
             Words.palabras.RemoveAt(randomPalabraIndex);
             Words.ListDataHasChanged();
