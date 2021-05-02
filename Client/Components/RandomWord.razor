@@ -79,7 +79,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        palabra = RandomPalabra();
+        await Words.GetPalabras();
+
+        if(Words.palabras != null)
+        {
+            palabra = RandomPalabra();
+        }
     }
 
     protected void CheckWord()
