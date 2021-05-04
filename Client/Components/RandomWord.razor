@@ -6,9 +6,11 @@
 @if (palabra != null)
 {
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
             <h4>@palabra.EnglishWord</h4>
         </div>
+    </div>
+    <div class="row">
         <div class="col-sm-3">
             <a @onclick="toggleShowAnswer">&#128065;</a>
         </div>
@@ -142,5 +144,9 @@ else
     {
         palabra = RandomPalabra();
         showAnswerSymbol = false;
+        if(displayAnswer)
+        {
+            displayAnswer = false;
+        }
     }
 }
