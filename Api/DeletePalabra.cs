@@ -28,11 +28,11 @@ namespace PalabrasApp.Api
                 ConnectionStringSetting = "PalabrasConnectionString")] DocumentClient client,
             Guid id)
         {
-            Uri palabraUri = UriFactory.CreateDocumentUri("palabras", "ContainerMain", id.ToString());
-            PartitionKey partitionKey = new PartitionKey("/Words");
-            RequestOptions requestOptions = new RequestOptions { PartitionKey = partitionKey };
+           // Uri palabraUri = UriFactory.CreateDocumentUri("palabras", "ContainerMain", id.ToString());
+            //PartitionKey partitionKey = new PartitionKey("/Words");
+            //RequestOptions requestOptions = new RequestOptions { PartitionKey = partitionKey };
 
-            ResourceResponse<Document> response = await client.DeleteDocumentAsync(palabraUri, requestOptions);
+            //ResourceResponse<Document> response = await client.DeleteDocumentAsync(palabraUri, requestOptions);
             // Use response for something or not..
 
             return new NoContentResult();
