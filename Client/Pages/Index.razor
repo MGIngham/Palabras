@@ -20,6 +20,8 @@
             </div>
         }
 
+        <button @onclick="DeletePalabra">DELETE WORD</button>
+
 
         <div class="row">
             <div class="col-sm-1">
@@ -126,6 +128,17 @@
             errorText = ex.ToString();
         }
 
+    }
+
+    protected async Task DeletePalabra ()
+    {
+        try
+        {
+            await Http.DeleteAsync("/api/DeletePalabra/" + "eca4c0d5-a67c-445e-b450-e75e1be15a11");
+        } catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
     }
 
     protected void ShowWordsList()
