@@ -17,7 +17,7 @@ namespace PalabrasApp.Api
     public static class DeletePalabra
     {
         [FunctionName("DeletePalabra")]
-        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "/{id}")] HttpRequest req,
+        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "DaletePalabra/{id}")] HttpRequest req,
             [CosmosDB(
                 databaseName: "palabras",
                 collectionName: "ContainerMain",
