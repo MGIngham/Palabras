@@ -19,7 +19,7 @@ namespace PalabrasApp.Api
         [FunctionName("DeletePalabra")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(
-                authLevel: AuthorizationLevel.Anonymous,
+                authLevel: AuthorizationLevel.Function,
                 methods: "delete",
                 Route = "/{id}")] HttpRequest request,
             [CosmosDB(
