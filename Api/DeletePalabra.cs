@@ -32,7 +32,7 @@ namespace PalabrasApp.Api
             RequestOptions requestOptions = new RequestOptions { PartitionKey = partitionKey };
 
             ResourceResponse<Document> response = await client.DeleteDocumentAsync(palabraUri, requestOptions);
-            // Use response for something or not...
+            // Use response for something or not..
 
             return new NoContentResult();
         }
