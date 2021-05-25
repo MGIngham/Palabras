@@ -22,7 +22,7 @@ namespace PalabrasApp.Api
                 databaseName: "palabras",
                 collectionName: "ContainerMain",
                 SqlQuery = "SELECT * FROM ContainerMain",
-                ConnectionStringSetting = "PalabrasConnectionString")]
+                ConnectionStringSetting = "CosmosDBConnection")]
                 DocumentClient client,
                 Guid id,
             ILogger log)
