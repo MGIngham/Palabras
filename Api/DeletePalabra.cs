@@ -17,17 +17,16 @@ namespace PalabrasApp.Api
     public static class DeletePalabra
     {
         [FunctionName("DeletePalabra")]
-        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = null)] HttpRequest req,
+        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "DeletePalabra/{id}")] HttpRequest req,
             [CosmosDB(
                 databaseName: "palabras",
                 collectionName: "ContainerMain",
-                SqlQuery = "SELECT * FROM ContainerMain",
                 ConnectionStringSetting = "CosmosDBConnection")]
                 DocumentClient client,
                 Guid id,
             ILogger log)
         {
-            Uri palabraUri = UriFactory.CreateDocumentUri("palabras", "ContainerMain", "eca4c0d5-a67c-445e-b450-e75e1be15a11");
+            Uri palabraUri = UriFactory.CreateDocumentUri("palabras", "ContainerMain", id.ToString());
             PartitionKey partitionKey = new PartitionKey("/Words");
             RequestOptions requestOptions = new RequestOptions { PartitionKey = partitionKey };
 
