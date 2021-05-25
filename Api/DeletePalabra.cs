@@ -20,8 +20,7 @@ namespace PalabrasApp.Api
         public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "DeletePalabra/{id}")] HttpRequest req,
             [CosmosDB(
                 databaseName: "palabras",
-                collectionName: "ContainerMain",
-                ConnectionStringSetting = "CosmosDBConnection")]
+                collectionName: "ContainerMain"]
                 DocumentClient client,
                 Guid id,
             ILogger log)
