@@ -17,7 +17,7 @@ namespace PalabrasApp.Api
     public static class DeletePalabra
     {
         [FunctionName("DeletePalabra")]
-        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "DeletePalabra/{id}")] HttpRequest req,
+        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "DeletePalabra/{id}")] HttpRequest req,
             [CosmosDB(
                 databaseName: "palabras",
                 collectionName: "ContainerMain")]
@@ -25,12 +25,19 @@ namespace PalabrasApp.Api
                 Guid id,
             ILogger log)
         {
-            Uri palabraUri = UriFactory.CreateDocumentUri("palabras", "ContainerMain", id.ToString());
-            PartitionKey partitionKey = new PartitionKey("/Words");
-            RequestOptions requestOptions = new RequestOptions { PartitionKey = partitionKey };
 
-            ResourceResponse<Document> response = await client.DeleteDocumentAsync(palabraUri, requestOptions);
-            // Use response for something or not..
+            try
+            {
+                Uri palabraUri = UriFactory.CreateDocumentUri("palabras", "ContainerMain", id.ToString());
+                PartitionKey partitionKey = new PartitionKey("/Words");
+                RequestOptions requestOptions = new RequestOptions { PartitionKey = partitionKey };
+
+
+                ResourceResponse<Document> response = await client.DeleteDocumentAsync(palabraUri, requestOptions);
+            } catch (Exception ex)
+            {
+                log.LogError(ex.ToString());
+            }
 
             return new NoContentResult();
         }

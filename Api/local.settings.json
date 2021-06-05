@@ -1,7 +1,8 @@
 {
   "IsEncrypted": false,
   "Values": {
-    "PalabrasConnectionString": "AccountEndpoint=https://palabras.documents.azure.com:443/;AccountKey=3Q7SgXRFoL3aAdWuY91118YGGYFaRYhSaGZy4wpnyrDA7URuCBrjzT84rloFKVtx4vvMPHlyJAF4bIz8VXeMfQ==;"
+    "PalabrasConnectionString": "AccountEndpoint=https://palabras.documents.azure.com:443/;AccountKey=3Q7SgXRFoL3aAdWuY91118YGGYFaRYhSaGZy4wpnyrDA7URuCBrjzT84rloFKVtx4vvMPHlyJAF4bIz8VXeMfQ==;",
+    "CosmosDBConnection": "AccountEndpoint=https://palabras.documents.azure.com:443/;AccountKey=3Q7SgXRFoL3aAdWuY91118YGGYFaRYhSaGZy4wpnyrDA7URuCBrjzT84rloFKVtx4vvMPHlyJAF4bIz8VXeMfQ==;"
   },
   "Host": {
     "LocalHttpPort": 7071,
