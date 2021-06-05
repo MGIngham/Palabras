@@ -29,7 +29,7 @@ namespace PalabrasApp.Api
 
             try
             {
-                Uri palabraUri = UriFactory.CreateDocumentUri("palabras", "ContainerMain", id.ToString());
+                Uri palabraUri = UriFactory.CreateDocumentUri("palabras", "ContainerMain", "eca4c0d5-a67c-445e-b450-e75e1be15a11");
                 PartitionKey partitionKey = new PartitionKey("/Words");
                 RequestOptions requestOptions = new RequestOptions { PartitionKey = partitionKey };
 
