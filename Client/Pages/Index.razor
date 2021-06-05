@@ -136,7 +136,7 @@
         {
             await Http.DeleteAsync("/api/DeletePalabra/" + "eca4c0d5-a67c-445e-b450-e75e1be15a11");
         }
-        catch (Exception ex)
+        catch (HttpRequestException ex)
         {
             Console.WriteLine(ex.ToString());
         }
