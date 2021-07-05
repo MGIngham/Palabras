@@ -5,42 +5,34 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Azure.WebJobs.Extensions.CosmosDB;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Microsoft.Azure.Documents.Client;
-using Microsoft.Azure.Documents;
+using PalabrasApp.Shared;
+
 
 namespace PalabrasApp.Api
 {
-    public static class DeletePalabra
+    public class DeletePalabra
     {
-        [FunctionName("DeletePalabra")]
-        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "DeletePalabra/{id}")] HttpRequest req,
-            [CosmosDB(
-                databaseName: "palabras",
-                collectionName: "ContainerMain",
-                ConnectionStringSetting = "CosmosDBConnection")]
-                DocumentClient client,
-                Guid id,
-            ILogger log)
+        private readonly CosmosClient _CosmosClient;
+
+        public DeletePalabra(CosmosClient cosmosClient)
         {
+            _CosmosClient = cosmosClient;
+        }
 
-            try
-            {
-                Uri palabraUri = UriFactory.CreateDocumentUri("palabras", "ContainerMain", "eca4c0d5-a67c-445e-b450-e75e1be15a11");
-                PartitionKey partitionKey = new PartitionKey("/Words");
-                RequestOptions requestOptions = new RequestOptions { PartitionKey = partitionKey };
+        [FunctionName("DeletePalabra")]
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "DeletePalabra")] HttpRequest req)
+        {
+            string id = "55";
+            var container = _CosmosClient.GetContainer("palabras", "ContainerMain");
 
+            var properties = await container.ReadContainerAsync();
+            Console.WriteLine(properties.Container.ToString());
 
-                ResourceResponse<Document> response = await client.DeleteDocumentAsync(palabraUri, requestOptions);
-            } catch (Exception ex)
-            {
-                log.LogError(ex.ToString());
-            }
+            await container.DeleteItemAsync<Palabra>(id, new PartitionKey("Palabras"));
 
             return new NoContentResult();
+
         }
     }
 }

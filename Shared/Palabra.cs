@@ -10,5 +10,7 @@ namespace PalabrasApp.Shared
         public string SpanishWord { get; set; }
         public string EnglishWord { get; set; }
         public string id { get; set; }
+
+        public string Words { get; set; } = "Palabra";
     }
 }
