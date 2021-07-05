@@ -21,15 +21,18 @@ namespace PalabrasApp.Api
         }
 
         [FunctionName("DeletePalabra")]
-        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "DeletePalabra")] HttpRequest req)
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, 
+            "delete", 
+            Route = "DeletePalabra/{id}")] HttpRequest req,
+            string id)
         {
-            string id = "55";
+            //string id = "55";
             var container = _CosmosClient.GetContainer("palabras", "ContainerMain");
 
             var properties = await container.ReadContainerAsync();
             Console.WriteLine(properties.Container.ToString());
 
-            await container.DeleteItemAsync<Palabra>(id, new PartitionKey("Palabras"));
+            await container.DeleteItemAsync<Palabra>(id, new PartitionKey("Palabra"));
 
             return new NoContentResult();
 

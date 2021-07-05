@@ -20,7 +20,7 @@
             </div>
         }
 
-        <button @onclick="DeletePalabra">DELETE WORD</button>
+        <button @onclick="@(d => DeletePalabra("22893acc-bc5d-41d2-8040-31838fc1eea3"))">DELETE WORD</button>
 
 
         <div class="row">
@@ -131,11 +131,11 @@
 
     }
 
-    protected async Task DeletePalabra()
+    protected async Task DeletePalabra(string id)
     {
         try
         {
-            await Http.DeleteAsync("/api/DeletePalabra");
+            await Http.DeleteAsync("/api/DeletePalabra/" + id);
         }
         catch (Exception ex)
         {
