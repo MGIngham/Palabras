@@ -4,20 +4,22 @@
 @inject NavigationManager Nav
 
 
-
-@foreach (var singlePalabra in Words.palabras)
+@{ int i = 0;}
+@foreach (var palabra in Words.palabras)
 {
     <ul class="list-group">
         <li class="list-group-item">
             <div class="row">
                 <div class="col-sm-10">
-                    @singlePalabra.SpanishWord : @singlePalabra.EnglishWord
+                    @{ var indx = i;}
+                    @palabra.SpanishWord : @palabra.EnglishWord
                 </div>
                 <div class="col-sm-2">
-                    <button @onclick="@(d => DeletePalabra(singlePalabra.id))">X</button>
+                    <a @onclick="@(d => DeletePalabra(palabra.id, indx))" style="color: red;">X</a>
                 </div>
             </div>
         </li>
+        @{i++;}
     </ul>
 }
 
@@ -30,12 +32,13 @@
         Words.OnChange += StateHasChanged;
     }
 
-    protected async Task DeletePalabra(string id)
+    protected async Task DeletePalabra(string id, int listIndex)
     {
         try
         {
             await Http.DeleteAsync("/api/DeletePalabra/" + id);
             Words.ListDataHasChanged();
+            Words.palabras.RemoveAt(listIndex);
         }
         catch (Exception ex)
         {

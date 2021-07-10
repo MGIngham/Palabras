@@ -132,12 +132,6 @@ else
         var randomPalabraIndex = random.Next(0, palabrasLength);
         var randomPalabra = Words.palabras[randomPalabraIndex];
 
-        if (Words.palabras.Count > 1)
-        {
-            Words.palabras.RemoveAt(randomPalabraIndex);
-            Words.ListDataHasChanged();
-        }
-
         return randomPalabra;
     }
 
