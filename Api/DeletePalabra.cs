@@ -26,16 +26,22 @@ namespace PalabrasApp.Api
             Route = "DeletePalabra/{id}")] HttpRequest req,
             string id)
         {
-            //string id = "55";
-            var container = _CosmosClient.GetContainer("palabras", "ContainerMain");
 
-            var properties = await container.ReadContainerAsync();
-            Console.WriteLine(properties.Container.ToString());
+            try
+            {
+                var container = _CosmosClient.GetContainer("palabras", "ContainerMain");
 
-            await container.DeleteItemAsync<Palabra>(id, new PartitionKey("Palabra"));
+                var properties = await container.ReadContainerAsync();
+                Console.WriteLine(properties.Container.ToString());
 
-            return new NoContentResult();
-
+                await container.DeleteItemAsync<Palabra>(id, new PartitionKey("Palabra"));
+                return new NoContentResult();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }
