@@ -1,18 +1,45 @@
 ﻿@using PalabrasApp.Shared
 @inject Services.WordsList Words
+@inject HttpClient Http
+@inject NavigationManager Nav
+
 
 
 @foreach (var singlePalabra in Words.palabras)
 {
     <ul class="list-group">
-        <li class="list-group-item">@singlePalabra.SpanishWord : @singlePalabra.EnglishWord</li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-sm-10">
+                    @singlePalabra.SpanishWord : @singlePalabra.EnglishWord
+                </div>
+                <div class="col-sm-2">
+                    <button @onclick="@(d => DeletePalabra(singlePalabra.id))">X</button>
+                </div>
+            </div>
+        </li>
     </ul>
 }
+
+
 
 @code {
 
     protected override async Task OnInitializedAsync()
     {
         Words.OnChange += StateHasChanged;
+    }
+
+    protected async Task DeletePalabra(string id)
+    {
+        try
+        {
+            await Http.DeleteAsync("/api/DeletePalabra/" + id);
+            Words.ListDataHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
     }
 }

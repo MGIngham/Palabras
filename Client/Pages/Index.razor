@@ -20,9 +20,6 @@
             </div>
         }
 
-        <button @onclick="@(d => DeletePalabra("22893acc-bc5d-41d2-8040-31838fc1eea3"))">DELETE WORD</button>
-
-
         <div class="row">
             <div class="col-sm-1">
                 <a href="/.auth/login/google" class="btn btn-scnd">Add word</a>
@@ -129,18 +126,6 @@
             errorText = ex.ToString();
         }
 
-    }
-
-    protected async Task DeletePalabra(string id)
-    {
-        try
-        {
-            await Http.DeleteAsync("/api/DeletePalabra/" + id);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
     }
 
     protected void ShowWordsList()
